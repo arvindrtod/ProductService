@@ -2,14 +2,11 @@ package com.scaler.ProductService.dtos;
 
 import lombok.Data;
 
-import java.util.UUID;
-
 @Data
-public class GenericProductDto {
-    private Long id;
+public class ProductRequestDto {
     private String title;
     private String description;
     private String image;
-    private String category;
-    private double price;
+    private CategoryDto category;
+    private PriceDto price;
 }

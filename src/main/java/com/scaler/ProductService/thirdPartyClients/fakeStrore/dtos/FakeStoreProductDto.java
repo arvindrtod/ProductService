@@ -1,11 +1,10 @@
-package com.scaler.ProductService.dtos;
+package com.scaler.ProductService.thirdPartyClients.fakeStrore.dtos;
 
 import lombok.Data;
 
-import java.util.UUID;
-
 @Data
-public class GenericProductDto {
+public class FakeStoreProductDto {
+
     private Long id;
     private String title;
     private String description;
