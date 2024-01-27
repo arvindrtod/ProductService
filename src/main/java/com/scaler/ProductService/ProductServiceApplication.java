@@ -22,25 +22,25 @@ import java.util.UUID;
 @SpringBootApplication
 public class ProductServiceApplication implements CommandLineRunner {
 
-	private ProductRepository productRepository;
-	private CategoryRepository categoryRepository;
-	private PriceRepository priceRepository;
+    private ProductRepository productRepository;
+    private CategoryRepository categoryRepository;
+    private PriceRepository priceRepository;
 
 
-	public ProductServiceApplication(ProductRepository productRepository,
-									 CategoryRepository categoryRepository,
-									 PriceRepository priceRepository) {
-		this.productRepository = productRepository;
-		this.categoryRepository=categoryRepository;
-		this.priceRepository=priceRepository;
-		}
+    public ProductServiceApplication(ProductRepository productRepository,
+                                     CategoryRepository categoryRepository,
+                                     PriceRepository priceRepository) {
+        this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
+        this.priceRepository = priceRepository;
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(ProductServiceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ProductServiceApplication.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
+    @Override
+    public void run(String... args) throws Exception {
 //		Mentor mentor= new Mentor();
 //		mentor.setId(1);
 //		mentor.setName("arvind");
@@ -84,6 +84,6 @@ public class ProductServiceApplication implements CommandLineRunner {
 //				System.out.println(productss.getTitle());
 //			}
 //		}
-
-	}
+//      productRepository.deleteById(UUID.fromString("8ffdd9b4-acd1-48a3-9c44-ec92c2b4e5b1"));
+    }
 }

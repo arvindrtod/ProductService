@@ -1,5 +1,6 @@
 package com.scaler.ProductService.services;
 
+import com.scaler.ProductService.dtos.DeleteProductResponseDto;
 import com.scaler.ProductService.dtos.MyGenericProductDto;
 import com.scaler.ProductService.dtos.ProductRequestDto;
 import com.scaler.ProductService.models.Product;
@@ -58,8 +59,18 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
+    public List<MyGenericProductDto> getMyAllProducts() {
+        return null;
+    }
+
+    @Override
     public GenericProductDto deleteProduct(Long id) {
        return convertFakeStroreDtopToGenericProductDto(fakeStoreProductClient.deleteProduct(id));
+    }
+
+    @Override
+    public DeleteProductResponseDto deleteMyProductById(UUID id) {
+        return null;
     }
 
     @Override
@@ -68,7 +79,12 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public Product createMyProduct(ProductRequestDto productRequestDto) {
+    public MyGenericProductDto createMyProduct(ProductRequestDto productRequestDto) {
+        return null;
+    }
+
+    @Override
+    public MyGenericProductDto updateMyProduct(ProductRequestDto productRequestDto,UUID id) {
         return null;
     }
 }

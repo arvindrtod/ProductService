@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -26,19 +27,21 @@ public class MyProductController {
     }
     @PostMapping
     public MyGenericProductDto createProduct(@RequestBody ProductRequestDto productRequestDto) {
-        Product myProduct = productService.createMyProduct(productRequestDto);
-        MyGenericProductDto myGenericProductDto = new MyGenericProductDto();
-        myGenericProductDto.setId(myProduct.getUuid());
-        myGenericProductDto.setDescription(myProduct.getDescription());
-        myGenericProductDto.setTitle(myProduct.getTitle());
-        myGenericProductDto.setImage(myProduct.getImage());
-        PriceDto priceDto= new PriceDto();
-        priceDto.setCurrency(myProduct.getPrice().getCurrency());
-        priceDto.setPrice(myProduct.getPrice().getPrice());
-        myGenericProductDto.setPrice(priceDto);
-        CategoryDto categoryDto= new CategoryDto();
-        categoryDto.setName(myProduct.getCategory().getName());
-        myGenericProductDto.setCategory(categoryDto);
-        return myGenericProductDto;
+       return productService.createMyProduct(productRequestDto);
+
     }
+    @GetMapping
+    public List<MyGenericProductDto> getAllProducts() throws NotFoundException {
+        return productService.getMyAllProducts();
+    }
+    @DeleteMapping("/{id}")
+    public DeleteProductResponseDto deleteProductById(@PathVariable("id") UUID id) throws NotFoundException {
+        return productService.deleteMyProductById(id);
+    }
+    @PutMapping("/{id}")
+    public MyGenericProductDto updateProduct(@RequestBody ProductRequestDto productRequestDto,@PathVariable("id")UUID id) throws NotFoundException {
+        return productService.updateMyProduct(productRequestDto,id);
+    }
+
+
 }
