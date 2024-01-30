@@ -1,6 +1,7 @@
 package com.scaler.ProductService.services;
 
 import com.scaler.ProductService.dtos.*;
+import com.scaler.ProductService.exceptions.NotFoundException;
 import com.scaler.ProductService.models.Category;
 import com.scaler.ProductService.models.Price;
 import com.scaler.ProductService.models.Product;
@@ -31,11 +32,34 @@ public class CategoryServiceImpl implements CategoryService{
         for(Category category:categoryList){
             CategoryResponseDto categoryResponseDto= new CategoryResponseDto();
             categoryResponseDto.setName(category.getName());
+            categoryResponseDto.setId(category.getUuid());
             categoryResponseDto.setProducts(getListOfProducts(category));
             categoryResponseDtos.add(categoryResponseDto);
         }
         return categoryResponseDtos;
     }
+
+    @Override
+    public CategoryResponseDto getAllProductsByCategory(String category) throws NotFoundException {
+        Optional<Category> categoryOptional = categoryRepository.findByName(category);
+       if(categoryOptional.isEmpty()){
+           throw new NotFoundException(category+ " category is not available");
+       }
+        Category savedCategory = categoryOptional.get();
+        List<MyGenericProductDto> listOfProducts = getListOfProducts(savedCategory);
+        CategoryResponseDto categoryResponseDto= new CategoryResponseDto();
+        categoryResponseDto.setName(savedCategory.getName());
+        categoryResponseDto.setId(savedCategory.getUuid());
+        categoryResponseDto.setProducts(listOfProducts);
+        return categoryResponseDto;
+    }
+
+
+
+
+
+
+
     public List<MyGenericProductDto> getListOfProducts(Category category){
         List<Product> products = category.getProducts();
         List<MyGenericProductDto> myGenericProductDtos= new ArrayList<>();
