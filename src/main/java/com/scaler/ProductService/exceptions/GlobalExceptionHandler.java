@@ -14,10 +14,9 @@ import java.util.Date;
 public class GlobalExceptionHandler  {
 
     @ExceptionHandler({NotFoundException.class})
-    public ResponseEntity<ExceptionDto> handleNNotFoundException(NotFoundException notFoundException, HttpServletRequest request){
+        public ResponseEntity<ExceptionDto> handleNNotFoundException(NotFoundException notFoundException, HttpServletRequest request){
         return new ResponseEntity<>(new ExceptionDto(new Date(), HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND,
                 notFoundException.getMessage(),request.getRequestURI()),
                 HttpStatus.NOT_FOUND);
     }
-
 }

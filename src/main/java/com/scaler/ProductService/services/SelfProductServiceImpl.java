@@ -13,6 +13,7 @@ import com.scaler.ProductService.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +29,15 @@ public class SelfProductServiceImpl implements ProductService {
     private PriceRepository priceRepository;
     private OrderRepository orderRepository;
 
+    private RestTemplate restTemplate;
+
     @Autowired
-    public SelfProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, PriceRepository priceRepository, OrderRepository orderRepository) {
+    public SelfProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, PriceRepository priceRepository, OrderRepository orderRepository, RestTemplate restTemplate) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.priceRepository = priceRepository;
         this.orderRepository = orderRepository;
+        this.restTemplate= restTemplate;
     }
 
     @Override
@@ -50,6 +54,8 @@ public class SelfProductServiceImpl implements ProductService {
 
     @Override
     public MyGenericProductDto createMyProduct(ProductRequestDto productRequestDto) {
+        Object userData = restTemplate.getForEntity("http://userService/users/2",Object.class);
+
         Product product = new Product();
         Product updatedProduct = convertProductRequestDtoToProduct(productRequestDto, product);
         Product savedProduct = productRepository.save(updatedProduct);
@@ -94,7 +100,7 @@ public class SelfProductServiceImpl implements ProductService {
 
     }
 
-    private MyGenericProductDto convertProductToMyGenericProductDto(Product product) {
+    public static MyGenericProductDto convertProductToMyGenericProductDto(Product product) {
         MyGenericProductDto myGenericProductDto = new MyGenericProductDto();
         myGenericProductDto.setId(product.getUuid());
         myGenericProductDto.setDescription(product.getDescription());
